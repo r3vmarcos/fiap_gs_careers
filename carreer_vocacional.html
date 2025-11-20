@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Teste Vocacional Tech — Novo</title>
+    <style>
+      :root {
+        --blue: #2c70d3;
+        --dark: #0f1724;
+        --bg: #f3f4f6;
+        --card: #ffffff;
+        --gap: 12px;
+      }
+
+      /* Reset */
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        background: var(--bg);
+        color: var(--dark);
+        font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 18px auto;
+        height: calc(100vh - 36px);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px;
+      }
+
+      body {
+        background: #d3c02c;
+        background: linear-gradient(90deg, rgba(211, 192, 44, 0.2) 0%, rgba(255, 255, 255, 1) 51%, rgba(78, 156, 140, 0.16) 100%);
+      }
+
+      /* Header / progress */
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .title {
+        font-weight: 700;
+        font-size: clamp(18px, 2.2vw, 26px);
+      }
+      .progress-wrap {
+        flex: 1;
+        margin: 0 12px;
+      }
+      .progress-base {
+        background: #e6edf8;
+        height: 10px;
+        border-radius: 999px;
+        overflow: hidden;
+      }
+      .progress-fill {
+        height: 10px;
+        background: var(--blue);
+        width: 0%;
+        transition: width 0.3s ease;
+        border-radius: 999px;
+      }
+
+      /* Card area */
+      .card {
+        background: var(--card);
+        border-radius: 14px;
+        box-shadow: 0 8px 24px rgba(11, 22, 39, 0.06);
+        padding: 14px;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        overflow: hidden;
+      }
+
+      /* Grid: 12 blocks per page */
+      #quiz-grid {
+        display: grid;
+        gap: var(--gap);
+        /* default to 2 columns for small devices */
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: minmax(80px, 1fr);
+        height: 100%;
+        overflow: auto;
+        padding: 6px;
+      }
+
+      /* breakpoints per your spec */
+      @media (min-width: 40rem) {
+        /* 640px */
+        #quiz-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 48rem) {
+        /* 768px */
+        #quiz-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 64rem) {
+        /* 1024px */
+        #quiz-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      @media (min-width: 80rem) {
+        /* 1280px */
+        #quiz-grid {
+          grid-template-columns: repeat(4, 1fr);
+          height: calc(100%);
+          overflow: hidden;
+        }
+      }
+      @media (min-width: 96rem) {
+        /* 1536px */
+        #quiz-grid {
+          grid-template-columns: repeat(4, 1fr);
+          height: calc(100%);
+          overflow: hidden;
+        }
+      }
+
+      /* block styles */
+      .quiz-block {
+        background: var(--card);
+        border: 2px solid var(--blue);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 10px;
+        cursor: pointer;
+        user-select: none;
+        transition: transform 0.12s ease, box-shadow 0.12s ease;
+        font-weight: 600;
+        /* responsive font */
+        font-size: clamp(12px, 1.6vw, 16px);
+        line-height: 1.15;
+        white-space: normal;
+        word-break: break-word;
+      }
+      .quiz-block:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 18px rgba(11, 22, 39, 0.06);
+      }
+      .block-selected {
+        background: var(--blue);
+        color: #fff;
+        border-color: rgba(0, 0, 0, 0.12);
+      }
+
+      /* bottom controls */
+      .controls {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 12px;
+        gap: 12px;
+      }
+      .counter {
+        font-size: 14px;
+        color: #334155;
+      }
+      .btn {
+        background: var(--blue);
+        color: white;
+        padding: 10px 16px;
+        border-radius: 10px;
+        border: 0;
+        cursor: pointer;
+        font-weight: 700;
+        box-shadow: 0 6px 14px rgba(44, 112, 211, 0.12);
+      }
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      /* small tweaks for very small screens: make font smaller and allow grid scroll */
+      @media (max-width: 420px) {
+        .title {
+          font-size: 18px;
+        }
+        .quiz-block {
+          font-size: 11px;
+          padding: 8px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <a id="externalBack" href="https://laurapigosso.github.io/Deploy-Proxima-Parada/" class="btn" style="background:#fff;color:var(--blue);border:2px solid var(--blue);margin-left:12px">Voltar Site</a>
+        <div class="title">Teste Vocacional Tech</div>
+        <div class="progress-wrap" style="flex: 1">
+          <div class="progress-base"><div id="progress" class="progress-fill"></div></div>
+        </div>
+        <div style="width: 120px; text-align: right" id="pageLabel">Página 1/5</div>
+      </div>
+
+      <div class="card">
+        <h3 id="quiz-title" style="margin: 6px 0 10px 0; font-size: 16px; font-weight: 700">Escolha até 3 que mais combinam com você</h3>
+
+        <div id="quiz-grid"></div>
+
+        <div class="controls">
+          <div class="counter" id="quiz-counter">0 / 3 selecionados</div>
+          <div style="display: flex; gap: 8px">
+            <button id="btn-prev" class="btn" style="background: #fff; color: var(--blue); border: 2px solid var(--blue)">Voltar</button>
+            <button id="btn-next" class="btn">Próximo</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      /* Allowed careers - loaded from careers.json originally.
+   Using the exact ids present in /mnt/data/careers.json (26 ids).
+*/
+      const ALLOWED = [
+        "front-end",
+        "back-end",
+        "full-stack",
+        "mobile-android",
+        "mobile-ios",
+        "mobile-flutter",
+        "qa",
+        "suporte-tecnico",
+        "analista-dados",
+        "analista-bi",
+        "engenheiro-dados",
+        "devops",
+        "infraestrutura",
+        "cybersecurity",
+        "ux-ui",
+        "product-owner",
+        "scrum-master",
+        "analista-sistemas",
+        "java-dev",
+        "dotnet-dev",
+        "php-dev",
+        "python-dev",
+        "ruby-dev",
+        "go-dev",
+        "salesforce-dev",
+        "data-analyst",
+      ];
+
+      /* Pages: 5 pages, 12 blocks each.
+   Texts are adapted / reduced from the original test and each block maps only to careers from ALLOWED.
+*/
+      const quizPages = [
+        {
+          title: "Onde você se imagina trabalhando?",
+          options: [
+            { id: "p1_1", text: "Criando interfaces e designs interativos", careers: ["front-end", "ux-ui", "full-stack"] },
+            { id: "p1_2", text: "Construindo APIs e servidores", careers: ["back-end", "full-stack", "devops"] },
+            { id: "p1_3", text: "Aplicativos móveis (Android)", careers: ["mobile-android", "mobile-flutter", "full-stack"] },
+            { id: "p1_4", text: "Aplicativos móveis (iOS)", careers: ["mobile-ios", "mobile-flutter", "full-stack"] },
+            { id: "p1_5", text: "Testando qualidade e automação", careers: ["qa", "devops", "analista-sistemas"] },
+            { id: "p1_6", text: "Suporte técnico e atendimento", careers: ["suporte-tecnico", "qa", "analista-sistemas"] },
+            { id: "p1_7", text: "Análise de dados e relatórios", careers: ["analista-dados", "data-analyst", "analista-bi"] },
+            { id: "p1_8", text: "Engenharia de dados e pipelines", careers: ["engenheiro-dados", "analista-dados", "devops"] },
+            { id: "p1_9", text: "Infraestrutura e redes", careers: ["infraestrutura", "devops", "analista-sistemas"] },
+            { id: "p1_10", text: "Segurança digital e investigação", careers: ["cybersecurity", "infraestrutura", "devops"] },
+            { id: "p1_11", text: "Produtos digitais e estratégia", careers: ["product-owner", "scrum-master", "analista-sistemas"] },
+            { id: "p1_12", text: "Criar soluções com várias linguagens", careers: ["full-stack", "python-dev", "java-dev"] },
+          ],
+        },
+        {
+          title: "Como você prefere trabalhar?",
+          options: [
+            { id: "p2_1", text: "Projetos criativos e visuais", careers: ["front-end", "ux-ui", "mobile-flutter"] },
+            { id: "p2_2", text: "Resolver problemas lógicos", careers: ["back-end", "java-dev", "python-dev"] },
+            { id: "p2_3", text: "Construir produtos escaláveis", careers: ["full-stack", "devops", "engenheiro-dados"] },
+            { id: "p2_4", text: "Focar em dados e insights", careers: ["analista-dados", "data-analyst", "analista-bi"] },
+            { id: "p2_5", text: "Automatizar processos", careers: ["devops", "qa", "analista-sistemas"] },
+            { id: "p2_6", text: "Trabalhar com clientes e negócios", careers: ["product-owner", "scrum-master", "suporte-tecnico"] },
+            { id: "p2_7", text: "Especializar em uma linguagem", careers: ["python-dev", "java-dev", "php-dev"] },
+            { id: "p2_8", text: "Desenvolver em plataformas low-code", careers: ["salesforce-dev", "full-stack", "php-dev"] },
+            { id: "p2_9", text: "Criar experiências mobile", careers: ["mobile-flutter", "mobile-android", "mobile-ios"] },
+            { id: "p2_10", text: "Garantir performance e APIs", careers: ["back-end", "devops", "api-dev"] },
+            { id: "p2_11", text: "Focar em sistemas corporativos", careers: ["analista-sistemas", "java-dev", "dotnet-dev"] },
+            { id: "p2_12", text: "Explorar novas tecnologias", careers: ["full-stack", "devops", "engenheiro-dados"] },
+          ],
+        },
+        {
+          title: "Qual atividade te anima mais?",
+          options: [
+            { id: "p3_1", text: "Desenhar interfaces e protótipos", careers: ["ux-ui", "front-end", "product-owner"] },
+            { id: "p3_2", text: "Programar backend robusto", careers: ["back-end", "java-dev", "python-dev"] },
+            { id: "p3_3", text: "Configurar infra e CI/CD", careers: ["devops", "infraestrutura", "full-stack"] },
+            { id: "p3_4", text: "Construir modelos e pipelines", careers: ["engenheiro-dados", "analista-dados", "data-analyst"] },
+            { id: "p3_5", text: "Ops, monitoramento e observability", careers: ["devops", "infraestrutura", "analista-sistemas"] },
+            { id: "p3_6", text: "Criar produtos e priorizar features", careers: ["product-owner", "scrum-master", "full-stack"] },
+            { id: "p3_7", text: "Escrever código em Ruby/Go", careers: ["ruby-dev", "go-dev", "full-stack"] },
+            { id: "p3_8", text: "Desenvolver em PHP/Wordpress", careers: ["php-dev", "full-stack", "salesforce-dev"] },
+            { id: "p3_9", text: "Analisar indicadores e BI", careers: ["analista-bi", "analista-dados", "data-analyst"] },
+            { id: "p3_10", text: "Criar integrações e APIs", careers: ["full-stack", "back-end", "devops"] },
+            { id: "p3_11", text: "Trabalhar com bancos de dados", careers: ["data-analyst", "engenheiro-dados", "analista-sistemas"] },
+            { id: "p3_12", text: "Garantir qualidade e releases", careers: ["qa", "devops", "analista-sistemas"] },
+          ],
+        },
+        {
+          title: "Ambiente e cultura que prefere",
+          options: [
+            { id: "p4_1", text: "Startup ágil e inovadora", careers: ["product-owner", "full-stack", "devops"] },
+            { id: "p4_2", text: "Empresa grande e estruturada", careers: ["analista-sistemas", "infraestrutura", "java-dev"] },
+            { id: "p4_3", text: "Times de produto multidisciplinares", careers: ["product-owner", "ux-ui", "scrum-master"] },
+            { id: "p4_4", text: "Times focados em dados", careers: ["analista-dados", "engenheiro-dados", "analista-bi"] },
+            { id: "p4_5", text: "Projetos mobile intensivos", careers: ["mobile-android", "mobile-ios", "mobile-flutter"] },
+            { id: "p4_6", text: "Times que amam automação", careers: ["devops", "qa", "infraestrutura"] },
+            { id: "p4_7", text: "Escritório com foco em design", careers: ["ux-ui", "front-end", "product-owner"] },
+            { id: "p4_8", text: "Ambiente de alta segurança", careers: ["cybersecurity", "infraestrutura", "devops"] },
+            { id: "p4_9", text: "Times que constroem APIs públicas", careers: ["back-end", "full-stack", "devops"] },
+            { id: "p4_10", text: "Equipe de suporte e operações", careers: ["suporte-tecnico", "analista-sistemas", "devops"] },
+            { id: "p4_11", text: "Times de integração corporativa", careers: ["salesforce-dev", "java-dev", "dotnet-dev"] },
+            { id: "p4_12", text: "Projetos em linguagens modernas", careers: ["python-dev", "go-dev", "ruby-dev"] },
+          ],
+        },
+        {
+          title: "O que te motiva no trabalho?",
+          options: [
+            { id: "p5_1", text: "Impacto direto no usuário", careers: ["front-end", "ux-ui", "product-owner"] },
+            { id: "p5_2", text: "Desafios técnicos difíceis", careers: ["back-end", "engenheiro-dados", "devops"] },
+            { id: "p5_3", text: "Crescer em dados e IA", careers: ["engenheiro-dados", "analista-dados", "data-analyst"] },
+            { id: "p5_4", text: "Criar produtos e liderar", careers: ["product-owner", "scrum-master", "full-stack"] },
+            { id: "p5_5", text: "Garantir sistemas estáveis", careers: ["infraestrutura", "devops", "analista-sistemas"] },
+            { id: "p5_6", text: "Melhorar processos e qualidade", careers: ["qa", "devops", "analista-sistemas"] },
+            { id: "p5_7", text: "Aprender novas stacks e libs", careers: ["full-stack", "python-dev", "java-dev"] },
+            { id: "p5_8", text: "Engenharia especializada (Go/Ruby)", careers: ["go-dev", "ruby-dev", "back-end"] },
+            { id: "p5_9", text: "Construir soluções mobile", careers: ["mobile-flutter", "mobile-android", "mobile-ios"] },
+            { id: "p5_10", text: "Trabalhar com clientes/negócios", careers: ["suporte-tecnico", "product-owner", "analista-sistemas"] },
+            { id: "p5_11", text: "Focar em performance e APIs", careers: ["backend", "devops", "full-stack"] },
+            { id: "p5_12", text: "Explorar novos desafios técnicos", careers: ["full-stack", "devops", "engenheiro-dados"] },
+          ],
+        },
+      ];
+
+      /* NOTE: p5_11 contains 'backend' which is not exactly an allowed id.
+   We'll ensure all careers used are within ALLOWED — map or filter.
+*/
+      function sanitizePages(pages) {
+        return pages.map((pg) => {
+          return {
+            title: pg.title,
+            options: pg.options.map((opt) => {
+              // keep only allowed careers
+              const careers = opt.careers.filter((c) => ALLOWED.includes(c)).slice(0, 6);
+              return { id: opt.id, text: opt.text, careers };
+            }),
+          };
+        });
+      }
+
+      const pages = sanitizePages(quizPages);
+
+      /* App state */
+      const appState = { currentPage: 0, selections: Array.from({ length: pages.length }, () => []) };
+
+      /* DOM references */
+      const grid = document.getElementById("quiz-grid");
+      const title = document.getElementById("quiz-title");
+      const progress = document.getElementById("progress");
+      const pageLabel = document.getElementById("pageLabel");
+      const counter = document.getElementById("quiz-counter");
+      const btnNext = document.getElementById("btn-next");
+      const btnPrev = document.getElementById("btn-prev");
+
+      function renderPage(i) {
+        const pg = pages[i];
+        title.textContent = pg.title;
+        pageLabel.textContent = `Página ${i + 1}/${pages.length}`;
+        progress.style.width = `${((i + 1) / pages.length) * 100}%`;
+
+        grid.innerHTML = "";
+        const selected = appState.selections[i];
+
+        pg.options.forEach((opt) => {
+          const btn = document.createElement("button");
+          btn.className = "quiz-block";
+          btn.type = "button";
+          btn.textContent = opt.text;
+          btn.dataset.optid = opt.id;
+
+          if (selected.some((s) => s.id === opt.id)) btn.classList.add("block-selected");
+
+          if (!selected.some((s) => s.id === opt.id) && selected.length >= 3) btn.disabled = false; // still clickable but will prevent add via logic
+
+          btn.addEventListener("click", () => {
+            toggleSelect(i, opt, btn);
+          });
+
+          grid.appendChild(btn);
+        });
+
+        counter.textContent = `${selected.length} / 3 selecionados`;
+
+        // if large screen (>=1280) prevent body scroll to keep layout fixed and show all 12 blocks
+        // handled by CSS (overflow hidden at breakpoint)
+      }
+
+      /* selection logic */
+      function toggleSelect(pageIndex, opt, el) {
+        const sel = appState.selections[pageIndex];
+        const found = sel.find((s) => s.id === opt.id);
+        if (found) {
+          appState.selections[pageIndex] = sel.filter((s) => s.id !== opt.id);
+        } else {
+          if (sel.length < 3) {
+            appState.selections[pageIndex].push(opt);
+          } else {
+            // optional: play shake or brief notice (skipped)
+            return;
+          }
+        }
+        renderPage(pageIndex);
+      }
+
+      /* navigation */
+      btnNext.addEventListener("click", () => {
+        if (appState.currentPage < pages.length - 1) {
+          appState.currentPage++;
+          renderPage(appState.currentPage);
+        } else {
+          finalize();
+        }
+        // scroll grid to top on mobile
+        grid.scrollTop = 0;
+      });
+      btnPrev.addEventListener("click", () => {
+        if (appState.currentPage > 0) {
+          appState.currentPage--;
+          renderPage(appState.currentPage);
+        } else {
+          // go back to start or do nothing
+        }
+        grid.scrollTop = 0;
+      });
+
+      /* finalize: compute scores and redirect to gs_dashboard.html?id=... */
+      function finalize() {
+  const all = appState.selections.flat();
+  const score = {};
+  all.forEach(opt => {
+    (opt.careers || []).forEach(c => {
+      score[c] = (score[c] || 0) + 1;
+    });
+  });
+  const entries = Object.entries(score);
+  if (entries.length === 0) {
+    localStorage.setItem('career_result_id', top);
+  window.location.href = 'careers_dashboard.html';
+    return;
+  }
+  entries.sort((a, b) => b[1] - a[1]);
+  let candidate = entries[0][0];
+  const ALLOWED = [
+    "front-end","back-end","full-stack","mobile-android","mobile-ios","mobile-flutter",
+    "qa","suporte-tecnico","analista-dados","analista-bi","engenheiro-dados","devops",
+    "infraestrutura","cybersecurity","ux-ui","product-owner","scrum-master","analista-sistemas",
+    "java-dev","dotnet-dev","php-dev","python-dev","ruby-dev","go-dev","salesforce-dev","data-analyst"
+  ];
+  const ALLOWED_LOWER = ALLOWED.map(x => x.toLowerCase());
+  function normalizeId(id) {
+    if (!id) return id;
+    let s = String(id).toLowerCase().trim();
+    const synonyms = {
+      "backend": "back-end",
+      "frontend": "front-end",
+      "fullstack": "full-stack",
+      "devops-engineer": "devops",
+      "analista-qa": "qa",
+      "analista-suporte": "suporte-tecnico",
+      "data-analyst": "analista-dados",
+      "desenvolvedor-python": "python-dev",
+      "desenvolvedor-java": "java-dev"
+    };
+    if (synonyms[s]) return synonyms[s];
+    s = s.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    s = s.replace(/\s+/g, "-").replace(/_+/g, "-");
+    return s;
+  }
+  let top = candidate;
+  if (!ALLOWED_LOWER.includes(top.toLowerCase())) {
+    const normalized = normalizeId(top);
+    if (ALLOWED_LOWER.includes(normalized.toLowerCase())) {
+      top = ALLOWED[ALLOWED_LOWER.indexOf(normalized.toLowerCase())];
+    } else {
+      const topScore = entries[0][1];
+      const tied = entries.filter(e => e[1] === topScore).map(e => e[0]);
+      let found = null;
+      for (const t of tied) {
+        const nt = normalizeId(t);
+        if (ALLOWED_LOWER.includes(nt.toLowerCase())) { found = nt; break; }
+      }
+      if (found) {
+        top = found;
+      } else {
+        const sc = new Set(all.flatMap(o => (o.careers || []).map(x => normalizeId(x))));
+        for (const a of ALLOWED) {
+          if (sc.has(a) || sc.has(a.toLowerCase())) { top = a; break; }
+        }
+      }
+    }
+  }
+  if (!ALLOWED.includes(top)) top = "product-owner";
+  localStorage.setItem('career_result_id', top);
+  localStorage.setItem('career_result_id', top);
+  window.location.href = 'careers_dashboard.html';
+}
+
+      /* initialize */
+      document.addEventListener("DOMContentLoaded", () => {
+        renderPage(0);
+      });
+    </script>
+  </body>
+</html>

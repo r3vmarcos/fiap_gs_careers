@@ -1,0 +1,601 @@
+{
+  "front-end": {
+    "id": "front-end",
+    "title": "Desenvolvedor Front-end",
+    "salaryAvg": 6200,
+    "demandLevel": "Muito Alta",
+    "remotePercent": 80,
+    "growth": 18,
+    "videos": ["https://www.youtube.com/watch?v=4dQtz1PpY9A", "https://www.youtube.com/watch?v=sRVx15eyblM", "https://www.youtube.com/watch?v=V_EG41aZ8oI"],
+    "seniority": { "junior": 4000, "pleno": 6200, "senior": 9500 },
+    "skills": [
+      { "name": "React / Next.js", "score": 96 },
+      { "name": "TypeScript", "score": 92 },
+      { "name": "Tailwind / CSS", "score": 90 },
+      { "name": "Figma (básico)", "score": 78 },
+      { "name": "Performance Web", "score": 75 }
+    ],
+    "universities": [
+      { "name": "FIAP – Sistemas para Internet", "url": "https://www.fiap.com.br" },
+      { "name": "USP – Ciência da Computação", "url": "https://www.usp.br" }
+    ],
+    "courses": [
+      { "name": "Ignite React – Rocketseat", "url": "https://rocketseat.com.br" },
+      { "name": "Formação Front-end – Alura", "url": "https://alura.com.br" }
+    ]
+  },
+
+  "back-end": {
+    "id": "back-end",
+    "title": "Desenvolvedor Back-end",
+    "salaryAvg": 7500,
+    "demandLevel": "Muito Alta",
+    "remotePercent": 85,
+    "growth": 22,
+    "videos": ["https://www.youtube.com/watch?v=6N3a7qUFk_0", "https://www.youtube.com/watch?v=2alg7MQ6_sI", "https://www.youtube.com/watch?v=f2L3t5x6RJ8"],
+    "seniority": { "junior": 4500, "pleno": 7500, "senior": 12000 },
+    "skills": [
+      { "name": "Node.js / NestJS", "score": 94 },
+      { "name": "APIs REST & GraphQL", "score": 92 },
+      { "name": "Banco de Dados (SQL/NoSQL)", "score": 90 },
+      { "name": "Docker", "score": 85 },
+      { "name": "Microservices", "score": 80 }
+    ],
+    "universities": [
+      { "name": "USP – Engenharia de Computação", "url": "https://www.usp.br" },
+      { "name": "FIAP – Engenharia de Software", "url": "https://fiap.com.br" }
+    ],
+    "courses": [
+      { "name": "Ignite Node.js – Rocketseat", "url": "https://rocketseat.com.br" },
+      { "name": "Formação Back-end – Alura", "url": "https://alura.com.br" }
+    ]
+  },
+
+  "full-stack": {
+    "id": "full-stack",
+    "title": "Desenvolvedor Full Stack",
+    "salaryAvg": 8200,
+    "demandLevel": "Muito Alta",
+    "remotePercent": 82,
+    "growth": 20,
+    "videos": ["https://www.youtube.com/watch?v=FZg1RRGtCqY", "https://www.youtube.com/watch?v=2alg7MQ6_sI", "https://www.youtube.com/watch?v=Ti2Q6oUBBqg"],
+    "seniority": { "junior": 4800, "pleno": 8200, "senior": 13000 },
+    "skills": [
+      { "name": "React + Node.js", "score": 95 },
+      { "name": "TypeScript", "score": 90 },
+      { "name": "Banco de Dados", "score": 88 },
+      { "name": "Docker + CI/CD", "score": 80 }
+    ],
+    "universities": [{ "name": "FIAP – Engenharia de Software", "url": "https://fiap.com.br" }],
+    "courses": [{ "name": "Ignite Full Stack – Rocketseat", "url": "https://rocketseat.com.br" }]
+  },
+
+  "mobile-android": {
+    "id": "mobile-android",
+    "title": "Desenvolvedor Mobile (Android)",
+    "salaryAvg": 7200,
+    "demandLevel": "Alta",
+    "remotePercent": 70,
+    "growth": 16,
+    "videos": ["https://www.youtube.com/watch?v=BBwyZ9DqVxk", "https://www.youtube.com/watch?v=jRTf4_T8X9k", "https://www.youtube.com/watch?v=EKY3VvzF4kA"],
+    "seniority": { "junior": 4500, "pleno": 7200, "senior": 11000 },
+    "skills": [
+      { "name": "Kotlin", "score": 95 },
+      { "name": "Jetpack Compose", "score": 90 },
+      { "name": "Clean Architecture", "score": 85 }
+    ],
+    "universities": [{ "name": "FIAP – Mobile Development", "url": "https://fiap.com.br" }],
+    "courses": [{ "name": "Android com Kotlin – Alura", "url": "https://alura.com.br" }]
+  },
+
+  "mobile-ios": {
+    "id": "mobile-ios",
+    "title": "Desenvolvedor Mobile (iOS)",
+    "salaryAvg": 8800,
+    "demandLevel": "Alta",
+    "remotePercent": 78,
+    "growth": 18,
+    "videos": ["https://www.youtube.com/watch?v=iQnRZc-v1xA", "https://www.youtube.com/watch?v=ctq_vvPRu8M", "https://www.youtube.com/watch?v=G6Bq_GdH7XY"],
+    "seniority": { "junior": 5500, "pleno": 8800, "senior": 14000 },
+    "skills": [
+      { "name": "Swift", "score": 96 },
+      { "name": "SwiftUI", "score": 92 },
+      { "name": "Combine", "score": 80 }
+    ],
+    "universities": [{ "name": "FIAP – Engenharia de Software", "url": "https://fiap.com.br" }],
+    "courses": [{ "name": "iOS com Swift – Alura", "url": "https://alura.com.br" }]
+  },
+
+  "mobile-flutter": {
+    "id": "mobile-flutter",
+    "title": "Desenvolvedor Mobile (Flutter)",
+    "salaryAvg": 7400,
+    "demandLevel": "Alta",
+    "remotePercent": 75,
+    "growth": 25,
+    "videos": ["https://www.youtube.com/watch?v=VPvVD8t02U8", "https://www.youtube.com/watch?v=pTJJsmejUOQ", "https://www.youtube.com/watch?v=1gDhl4leEzA"],
+    "seniority": { "junior": 4500, "pleno": 7400, "senior": 11500 },
+    "skills": [
+      { "name": "Dart", "score": 94 },
+      { "name": "Flutter", "score": 96 },
+      { "name": "Riverpod / Bloc", "score": 85 }
+    ],
+    "universities": [{ "name": "FIAP – Mobile Development", "url": "https://fiap.com.br" }],
+    "courses": [{ "name": "Flutter Expert – DIO", "url": "https://dio.me" }]
+  },
+
+  "qa": {
+    "id": "qa",
+    "title": "Analista de QA",
+    "salaryAvg": 5500,
+    "demandLevel": "Alta",
+    "remotePercent": 70,
+    "growth": 18,
+    "videos": ["https://www.youtube.com/watch?v=JVAo9Xy0E7o", "https://www.youtube.com/watch?v=I3Mgcf4VNIg", "https://www.youtube.com/watch?v=gH3O6IKhRkA"],
+    "seniority": { "junior": 3500, "pleno": 5500, "senior": 8500 },
+    "skills": [
+      { "name": "Cypress / Playwright", "score": 92 },
+      { "name": "Testes de API", "score": 90 },
+      { "name": "Automação Mobile", "score": 80 }
+    ],
+    "universities": [{ "name": "FIAP – Engenharia de Software", "url": "https://fiap.com.br" }],
+    "courses": [{ "name": "Formação QA – Alura", "url": "https://alura.com.br" }]
+  },
+
+  "suporte-tecnico": {
+    "id": "suporte-tecnico",
+    "title": "Analista de Suporte Técnico",
+    "salaryAvg": 3200,
+    "demandLevel": "Alta",
+    "remotePercent": 45,
+    "growth": 10,
+    "videos": ["https://www.youtube.com/watch?v=M5ndxxsFSvE", "https://www.youtube.com/watch?v=tgpjHvMDPkA", "https://www.youtube.com/watch?v=mxRTwNH9YDw"],
+    "seniority": { "junior": 2200, "pleno": 3200, "senior": 5000 },
+    "skills": [
+      { "name": "Help Desk", "score": 90 },
+      { "name": "Windows / Linux", "score": 85 },
+      { "name": "Redes básicas", "score": 80 }
+    ],
+    "universities": [{ "name": "FIAP – Redes de Computadores", "url": "https://fiap.com.br" }],
+    "courses": [{ "name": "Suporte Técnico – Udemy", "url": "https://udemy.com" }]
+  },
+
+  "analista-dados": {
+    "id": "analista-dados",
+    "title": "Analista de Dados",
+    "salaryAvg": 7800,
+    "demandLevel": "Muito Alta",
+    "remotePercent": 78,
+    "growth": 30,
+    "videos": ["https://www.youtube.com/watch?v=2BrpKpWwTNc", "https://www.youtube.com/watch?v=bqgWkdG0LKo", "https://www.youtube.com/watch?v=Zwvq-rlIHAw"],
+    "seniority": { "junior": 4800, "pleno": 7800, "senior": 13000 },
+    "skills": [
+      { "name": "SQL Avançado", "score": 96 },
+      { "name": "Python (Pandas)", "score": 94 },
+      { "name": "Power BI / Tableau", "score": 92 }
+    ],
+    "universities": [
+      { "name": "USP – Estatística", "url": "https://usp.br" },
+      { "name": "FIAP – Ciência de Dados", "url": "https://fiap.com.br" }
+    ],
+    "courses": [
+      { "name": "Formação Data Analytics – Alura", "url": "https://alura.com.br" },
+      { "name": "Power BI Completo – Hashtag", "url": "https://hashtagtreinamentos.com" }
+    ]
+  },
+
+  "analista-bi": {
+    "id": "analista-bi",
+    "title": "Analista de BI",
+    "salaryAvg": 7200,
+    "demandLevel": "Alta",
+    "remotePercent": 65,
+    "growth": 16,
+    "videos": ["https://www.youtube.com/watch?v=fQK1EpiI1-A", "https://www.youtube.com/watch?v=Q-i0c9R14Oo", "https://www.youtube.com/watch?v=2BrpKpWwTNc"],
+    "seniority": { "junior": 4500, "pleno": 7200, "senior": 11000 },
+    "skills": [
+      { "name": "Power BI", "score": 95 },
+      { "name": "SQL", "score": 90 },
+      { "name": "Dashboards", "score": 88 }
+    ],
+    "universities": [{ "name": "FIAP – Analytics", "url": "https://fiap.com.br" }],
+    "courses": [{ "name": "Power BI Completo – Hashtag", "url": "https://hashtagtreinamentos.com" }]
+  },
+
+  "engenheiro-dados": {
+    "id": "engenheiro-dados",
+    "title": "Engenheiro de Dados",
+    "salaryAvg": 12000,
+    "demandLevel": "Muito Alta",
+    "remotePercent": 88,
+    "growth": 35,
+    "videos": ["https://www.youtube.com/watch?v=9URM1_2S0ZI", "https://www.youtube.com/watch?v=Hc79sDi3f0U", "https://www.youtube.com/watch?v=2BrpKpWwTNc"],
+    "seniority": { "junior": 7500, "pleno": 12000, "senior": 19000 },
+    "skills": [
+      { "name": "Spark / Databricks", "score": 94 },
+      { "name": "Python + Airflow", "score": 92 },
+      { "name": "Snowflake / BigQuery", "score": 88 }
+    ],
+    "universities": [{ "name": "FIAP – Engenharia de Dados", "url": "https://fiap.com.br" }],
+    "courses": [{ "name": "Engenharia de Dados – Data Viking", "url": "https://youtube.com/dataviking" }]
+  },
+
+  "devops": {
+    "id": "devops",
+    "title": "DevOps / SRE",
+    "salaryAvg": 13500,
+    "demandLevel": "Muito Alta",
+    "remotePercent": 90,
+    "growth": 38,
+    "videos": ["https://www.youtube.com/watch?v=t1pRBhC9I6w", "https://www.youtube.com/watch?v=mrGfxvHUB5E", "https://www.youtube.com/watch?v=7b4V1Vd4I2g"],
+    "seniority": { "junior": 8000, "pleno": 13500, "senior": 22000 },
+    "skills": [
+      { "name": "Kubernetes", "score": 96 },
+      { "name": "Terraform", "score": 94 },
+      { "name": "AWS / GCP / Azure", "score": 92 },
+      { "name": "Observabilidade", "score": 88 }
+    ],
+    "universities": [{ "name": "FIAP – Cloud Computing", "url": "https://fiap.com.br" }],
+    "courses": [{ "name": "DevOps PRO – Linuxtips", "url": "https://linuxtips.io" }]
+  },
+
+  "infraestrutura": {
+    "id": "infraestrutura",
+    "title": "Analista de Infraestrutura",
+    "salaryAvg": 5800,
+    "demandLevel": "Alta",
+    "remotePercent": 50,
+    "growth": 12,
+    "videos": ["https://www.youtube.com/watch?v=OQSZG6hef0s", "https://www.youtube.com/watch?v=-Yzg5Bgy6Z4", "https://www.youtube.com/watch?v=ikVSL53uX8M"],
+    "seniority": { "junior": 3500, "pleno": 5800, "senior": 9000 },
+    "skills": [
+      { "name": "Linux", "score": 90 },
+      { "name": "Redes", "score": 85 },
+      { "name": "Cloud Básico", "score": 75 }
+    ],
+    "universities": [{ "name": "FIAP – Redes de Computadores", "url": "https://fiap.com.br" }],
+    "courses": [{ "name": "Infraestrutura TI – Udemy", "url": "https://udemy.com" }]
+  },
+
+  "cybersecurity": {
+    "id": "cybersecurity",
+    "title": "Analista de Cybersecurity",
+    "salaryAvg": 11000,
+    "demandLevel": "Muito Alta",
+    "remotePercent": 75,
+    "growth": 32,
+    "videos": ["https://www.youtube.com/watch?v=tLNNf1z8jF4", "https://www.youtube.com/watch?v=kPRA0W1kECg", "https://www.youtube.com/watch?v=FnWwqDfZ2JA"],
+    "seniority": { "junior": 6500, "pleno": 11000, "senior": 18000 },
+    "skills": [
+      { "name": "Pentest", "score": 92 },
+      { "name": "SOC / SIEM", "score": 90 },
+      { "name": "Cloud Security", "score": 88 }
+    ],
+    "universities": [{ "name": "FIAP – Cybersecurity", "url": "https://fiap.com.br" }],
+    "courses": [{ "name": "Cyber Security – Linuxtips", "url": "https://youtube.com/linuxtips" }]
+  },
+
+  "ux-ui": {
+    "id": "ux-ui",
+    "title": "UX/UI Designer",
+    "salaryAvg": 7800,
+    "demandLevel": "Muito Alta",
+    "remotePercent": 85,
+    "growth": 22,
+    "videos": ["https://www.youtube.com/watch?v=uZ9H8N4ZrSg", "https://www.youtube.com/watch?v=vK1DkH14f8E", "https://www.youtube.com/watch?v=mDcuNArF2fo"],
+    "seniority": { "junior": 4500, "pleno": 7800, "senior": 13000 },
+    "skills": [
+      { "name": "Figma", "score": 98 },
+      { "name": "UX Research", "score": 92 },
+      { "name": "Design System", "score": 90 }
+    ],
+    "universities": [{ "name": "FIAP – Design Digital", "url": "https://fiap.com.br" }],
+    "courses": [{ "name": "UX/UI Expert – EBAC", "url": "https://ebac.online" }]
+  },
+
+  "product-owner": {
+    "id": "product-owner",
+    "title": "Product Owner",
+    "salaryAvg": 11500,
+    "demandLevel": "Muito Alta",
+    "remotePercent": 80,
+    "growth": 25,
+    "videos": ["https://www.youtube.com/watch?v=sG60tTzmvoI", "https://www.youtube.com/watch?v=yk79QO6fK8w", "https://www.youtube.com/watch?v=NVfza6wOxoU"],
+    "seniority": { "junior": 7000, "pleno": 11500, "senior": 18000 },
+    "skills": [
+      { "name": "Backlog Management", "score": 95 },
+      { "name": "User Stories", "score": 90 },
+      { "name": "KPIs e Métricas", "score": 85 }
+    ],
+    "universities": [{ "name": "FIAP – Gestão de Produtos", "url": "https://fiap.com.br" }],
+    "courses": [{ "name": "Formação Product Owner – Alura", "url": "https://alura.com.br" }]
+  },
+
+  "scrum-master": {
+    "id": "scrum-master",
+    "title": "Scrum Master",
+    "salaryAvg": 10500,
+    "demandLevel": "Alta",
+    "remotePercent": 75,
+    "growth": 20,
+    "videos": ["https://www.youtube.com/watch?v=kmA-xejgdds", "https://www.youtube.com/watch?v=ZURpplzNEh4", "https://www.youtube.com/watch?v=lDMjXFKsKbA"],
+    "seniority": { "junior": 6500, "pleno": 10500, "senior": 16000 },
+    "skills": [
+      { "name": "Facilitação de Cerimônias", "score": 95 },
+      { "name": "Resolução de Impedimentos", "score": 90 },
+      { "name": "Coaching Ágil", "score": 85 }
+    ],
+    "universities": [{ "name": "FIAP – Gestão Ágil", "url": "https://fiap.com.br" }],
+    "courses": [{ "name": "Scrum Master Professional – Alura", "url": "https://alura.com.br" }]
+  },
+
+  "analista-sistemas": {
+    "id": "analista-sistemas",
+    "title": "Analista de Sistemas",
+    "salaryAvg": 7500,
+    "demandLevel": "Alta",
+    "remotePercent": 65,
+    "growth": 14,
+    "videos": ["https://www.youtube.com/watch?v=5K7OGSsWlzU", "https://www.youtube.com/watch?v=u_onzfOZjY0", "https://www.youtube.com/watch?v=VeYTLuPSTHE"],
+    "seniority": { "junior": 4800, "pleno": 7500, "senior": 12000 },
+    "skills": [
+      { "name": "Levantamento de Requisitos", "score": 95 },
+      { "name": "UML / Modelagem", "score": 90 },
+      { "name": "Documentação Técnica", "score": 85 }
+    ],
+    "universities": [{ "name": "USP – Sistemas de Informação", "url": "https://usp.br" }],
+    "courses": [{ "name": "Análise de Sistemas – Alura", "url": "https://alura.com.br" }]
+  },
+
+  "java-dev": {
+    "id": "java-dev",
+    "title": "Desenvolvedor Java",
+    "salaryAvg": 8500,
+    "demandLevel": "Muito Alta",
+    "remotePercent": 75,
+    "growth": 20,
+    "videos": ["https://www.youtube.com/watch?v=9Yat5JyS1tE", "https://www.youtube.com/watch?v=QznydP6KD1A", "https://www.youtube.com/watch?v=t8pPdKYpowI"],
+    "seniority": { "junior": 5000, "pleno": 8500, "senior": 14000 },
+    "skills": [
+      { "name": "Spring Boot", "score": 95 },
+      { "name": "Java 17+", "score": 92 },
+      { "name": "Microservices", "score": 88 }
+    ],
+    "universities": [{ "name": "USP – Ciência da Computação", "url": "https://usp.br" }],
+    "courses": [{ "name": "Java Completo – Loiane Groner", "url": "https://youtube.com/loianeg" }]
+  },
+
+  "dotnet-dev": {
+    "id": "dotnet-dev",
+    "title": "Desenvolvedor .NET",
+    "salaryAvg": 8800,
+    "demandLevel": "Muito Alta",
+    "remotePercent": 72,
+    "growth": 18,
+    "videos": ["https://www.youtube.com/watch?v=LX5lKjC7C-A", "https://www.youtube.com/watch?v=1t5QK-4jG5U", "https://www.youtube.com/watch?v=k8as5I5G8h8"],
+    "seniority": { "junior": 5200, "pleno": 8800, "senior": 14500 },
+    "skills": [
+      { "name": "C# .NET 8", "score": 96 },
+      { "name": "ASP.NET Core", "score": 92 },
+      { "name": "Entity Framework", "score": 88 }
+    ],
+    "universities": [{ "name": "FIAP – Engenharia de Software", "url": "https://fiap.com.br" }],
+    "courses": [{ "name": "Formação .NET – Macoratti", "url": "https://youtube.com/macoratti" }]
+  },
+
+  "php-dev": {
+    "id": "php-dev",
+    "title": "Desenvolvedor PHP",
+    "salaryAvg": 6200,
+    "demandLevel": "Alta",
+    "remotePercent": 65,
+    "growth": 10,
+    "videos": ["https://www.youtube.com/watch?v=NfXaINcqPt8", "https://www.youtube.com/watch?v=00-Nt0zWZcI", "https://www.youtube.com/watch?v=JHk2vFs1aG8"],
+    "seniority": { "junior": 4000, "pleno": 6200, "senior": 10000 },
+    "skills": [
+      { "name": "Laravel", "score": 94 },
+      { "name": "PHP 8+", "score": 90 },
+      { "name": "Composer", "score": 85 }
+    ],
+    "universities": [{ "name": "FIAP – Sistemas de Informação", "url": "https://fiap.com.br" }],
+    "courses": [{ "name": "PHP Moderno – Curso em Vídeo", "url": "https://youtube.com/cursoemvideo" }]
+  },
+
+  "python-dev": {
+    "id": "python-dev",
+    "title": "Desenvolvedor Python",
+    "salaryAvg": 9500,
+    "demandLevel": "Muito Alta",
+    "remotePercent": 88,
+    "growth": 30,
+    "videos": ["https://www.youtube.com/watch?v=Qj5RHHp1kO0", "https://www.youtube.com/watch?v=rfscVS0vtbw", "https://www.youtube.com/watch?v=cKlnR-CB3tk"],
+    "seniority": { "junior": 5500, "pleno": 9500, "senior": 15000 },
+    "skills": [
+      { "name": "FastAPI / Django", "score": 95 },
+      { "name": "Python 3.11+", "score": 98 },
+      { "name": "Pydantic", "score": 88 }
+    ],
+    "universities": [{ "name": "USP – Ciência da Computação", "url": "https://usp.br" }],
+    "courses": [{ "name": "Python para Devs – Linuxtips", "url": "https://youtube.com/linuxtips" }]
+  },
+
+  "ruby-dev": {
+    "id": "ruby-dev",
+    "title": "Desenvolvedor Ruby",
+    "salaryAvg": 7800,
+    "demandLevel": "Média",
+    "remotePercent": 80,
+    "growth": 12,
+    "videos": ["https://www.youtube.com/watch?v=t8UU0n5VVmA", "https://www.youtube.com/watch?v=h4p3dVqF3fI", "https://www.youtube.com/watch?v=NqY6IcdvIZA"],
+    "seniority": { "junior": 4800, "pleno": 7800, "senior": 13000 },
+    "skills": [
+      { "name": "Ruby on Rails", "score": 96 },
+      { "name": "Hotwire / Stimulus", "score": 88 },
+      { "name": "RSpec", "score": 85 }
+    ],
+    "universities": [{ "name": "FIAP – Engenharia de Software", "url": "https://fiap.com.br" }],
+    "courses": [{ "name": "Ruby on Rails – OneBitCode", "url": "https://onebitcode.com" }]
+  },
+
+  "go-dev": {
+    "id": "go-dev",
+    "title": "Desenvolvedor Go",
+    "salaryAvg": 11500,
+    "demandLevel": "Muito Alta",
+    "remotePercent": 90,
+    "growth": 35,
+    "videos": ["https://www.youtube.com/watch?v=YS4e4q9oBaU", "https://www.youtube.com/watch?v=jFfo23yIWac", "https://www.youtube.com/watch?v=Q0d4cFZgq0E"],
+    "seniority": { "junior": 7000, "pleno": 11500, "senior": 18000 },
+    "skills": [
+      { "name": "Golang", "score": 98 },
+      { "name": "Goroutines", "score": 92 },
+      { "name": "Gin / Fiber", "score": 88 }
+    ],
+    "universities": [{ "name": "USP – Engenharia de Computação", "url": "https://usp.br" }],
+    "courses": [{ "name": "Golang – Aprenda Go", "url": "https://youtube.com/AprendaGo" }]
+  },
+
+  "salesforce-dev": {
+    "id": "salesforce-dev",
+    "title": "Desenvolvedor Salesforce",
+    "salaryAvg": 9800,
+    "demandLevel": "Alta",
+    "remotePercent": 88,
+    "growth": 25,
+    "videos": ["https://www.youtube.com/watch?v=edS5E2xe50Q", "https://www.youtube.com/watch?v=EPuMwVzKhIk", "https://www.youtube.com/watch?v=SEuxso9jK5A"],
+    "seniority": { "junior": 6000, "pleno": 9800, "senior": 15000 },
+    "skills": [
+      { "name": "Apex", "score": 92 },
+      { "name": "LWC", "score": 90 },
+      { "name": "Flow Builder", "score": 85 }
+    ],
+    "universities": [{ "name": "FIAP – Sistemas de Informação", "url": "https://fiap.com.br" }],
+    "courses": [{ "name": "Trailhead – Salesforce", "url": "https://trailhead.salesforce.com" }]
+  },
+
+  "data-scientist": {
+    "id": "data-scientist",
+    "title": "Cientista de Dados",
+    "salaryAvg": 14000,
+    "demandLevel": "Muito Alta",
+    "remotePercent": 82,
+    "growth": 40,
+    "videos": ["https://www.youtube.com/watch?v=Zwvq-rlIHAw", "https://www.youtube.com/watch?v=bqgWkdG0LKo", "https://www.youtube.com/watch?v=VlYDWOfiFuc"],
+    "seniority": { "junior": 8500, "pleno": 14000, "senior": 22000 },
+    "skills": [
+      { "name": "Python / R", "score": 96 },
+      { "name": "Machine Learning", "score": 94 },
+      { "name": "Estatística Avançada", "score": 90 }
+    ],
+    "universities": [{ "name": "USP – Estatística", "url": "https://usp.br" }],
+    "courses": [{ "name": "Formação Data Science – Alura", "url": "https://alura.com.br" }]
+  },
+
+  "ml-engineer": {
+    "id": "ml-engineer",
+    "title": "Engenheiro de Machine Learning",
+    "salaryAvg": 16500,
+    "demandLevel": "Muito Alta",
+    "remotePercent": 90,
+    "growth": 45,
+    "videos": ["https://www.youtube.com/watch?v=1degLJSjwwM", "https://www.youtube.com/watch?v=Iuz_jc96bQk", "https://www.youtube.com/watch?v=pKc1J4RB_VQ"],
+    "seniority": { "junior": 10000, "pleno": 16500, "senior": 26000 },
+    "skills": [
+      { "name": "TensorFlow / PyTorch", "score": 96 },
+      { "name": "MLOps", "score": 92 },
+      { "name": "Kubernetes para ML", "score": 88 }
+    ],
+    "universities": [{ "name": "IME-USP – Ciência da Computação", "url": "https://usp.br" }],
+    "courses": [{ "name": "Deep Learning – Alura", "url": "https://alura.com.br" }]
+  },
+
+  "cloud-architect": {
+    "id": "cloud-architect",
+    "title": "Arquiteto de Cloud",
+    "salaryAvg": 18000,
+    "demandLevel": "Muito Alta",
+    "remotePercent": 92,
+    "growth": 42,
+    "videos": ["https://www.youtube.com/watch?v=Ap1H2TP49kA", "https://www.youtube.com/watch?v=m139EldD4QA", "https://www.youtube.com/watch?v=ne_uD1f1uow"],
+    "seniority": { "junior": 11000, "pleno": 18000, "senior": 28000 },
+    "skills": [
+      { "name": "AWS / Azure / GCP", "score": 98 },
+      { "name": "Well-Architected Framework", "score": 94 },
+      { "name": "Serverless", "score": 90 }
+    ],
+    "universities": [{ "name": "FIAP – Cloud Computing", "url": "https://fiap.com.br" }],
+    "courses": [{ "name": "Arquitetura Cloud – Linuxtips", "url": "https://linuxtips.io" }]
+  },
+
+  "blockchain-dev": {
+    "id": "blockchain-dev",
+    "title": "Desenvolvedor Blockchain",
+    "salaryAvg": 12000,
+    "demandLevel": "Alta",
+    "remotePercent": 90,
+    "growth": 30,
+    "videos": ["https://www.youtube.com/watch?v=pm5DdRySFQ0", "https://www.youtube.com/watch?v=JA9G1a3jX3I", "https://www.youtube.com/watch?v=3eP93k8gCZI"],
+    "seniority": { "junior": 7500, "pleno": 12000, "senior": 19000 },
+    "skills": [
+      { "name": "Solidity", "score": 95 },
+      { "name": "Web3.js / Ethers.js", "score": 90 },
+      { "name": "Smart Contracts", "score": 92 }
+    ],
+    "universities": [{ "name": "USP – Ciência da Computação", "url": "https://usp.br" }],
+    "courses": [{ "name": "Semana Solidity – Gustavo Toledo", "url": "https://youtube.com/gustavotoledo" }]
+  },
+
+  "low-code": {
+    "id": "low-code",
+    "title": "Desenvolvedor Low-Code/No-Code",
+    "salaryAvg": 7800,
+    "demandLevel": "Alta",
+    "remotePercent": 85,
+    "growth": 35,
+    "videos": ["https://www.youtube.com/watch?v=9VeLpODjnro", "https://www.youtube.com/watch?v=Ap1H2TP49kA", "https://www.youtube.com/watch?v=LvEBqZ2XtjQ"],
+    "seniority": { "junior": 5000, "pleno": 7800, "senior": 12000 },
+    "skills": [
+      { "name": "OutSystems / Power Platform", "score": 92 },
+      { "name": "Bubble / Adalo", "score": 88 },
+      { "name": "Integrações API", "score": 85 }
+    ],
+    "universities": [{ "name": "FIAP – Transformação Digital", "url": "https://fiap.com.br" }],
+    "courses": [{ "name": "Low-Code Expert – Léo Andrade", "url": "https://youtube.com/leoandrade" }]
+  },
+
+  "tech-lead": {
+    "id": "tech-lead",
+    "title": "Tech Lead",
+    "salaryAvg": 18000,
+    "demandLevel": "Muito Alta",
+    "remotePercent": 80,
+    "growth": 25,
+    "videos": ["https://www.youtube.com/watch?v=LvEBqZ2XtjQ", "https://www.youtube.com/watch?v=ZURpplzNEh4", "https://www.youtube.com/watch?v=kmA-xejgdds"],
+    "seniority": { "pleno": 15000, "senior": 22000 },
+    "skills": [
+      { "name": "Liderança Técnica", "score": 95 },
+      { "name": "Arquitetura de Software", "score": 92 },
+      { "name": "Mentoria", "score": 90 }
+    ],
+    "universities": [{ "name": "FIAP – Engenharia de Software", "url": "https://fiap.com.br" }],
+    "courses": [{ "name": "Liderança Técnica – Alura", "url": "https://alura.com.br" }]
+  },
+
+  "cto": {
+    "id": "cto",
+    "title": "CTO / Diretor de Tecnologia",
+    "salaryAvg": 35000,
+    "demandLevel": "Alta",
+    "remotePercent": 70,
+    "growth": 20,
+    "videos": ["https://www.youtube.com/watch?v=ZvsQlEVCF8o", "https://www.youtube.com/watch?v=F31ZadsNVhE", "https://www.youtube.com/watch?v=2h0iC33n_cs"],
+    "seniority": { "senior": 35000 },
+    "skills": [
+      { "name": "Visão Estratégica", "score": 98 },
+      { "name": "Gestão de Times", "score": 95 },
+      { "name": "Inovação Tecnológica", "score": 92 }
+    ],
+    "universities": [{ "name": "USP – Engenharia", "url": "https://usp.br" }],
+    "courses": [{ "name": "Exec MBA Tecnologia – FIAP", "url": "https://fiap.com.br" }]
+  }
+}

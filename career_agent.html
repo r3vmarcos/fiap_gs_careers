@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <title>Especialista em Carreiras Tech</title>
+
+    <!-- TAILWIND -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FONTE – Atkinson Hyperlegible -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet" />
+
+    <style>
+      body {
+        font-family: "Atkinson Hyperlegible", sans-serif;
+        background: linear-gradient(90deg, rgba(211, 192, 44, 0.2) 10%, rgba(255, 255, 255, 1) 51%, rgba(78, 156, 140, 0.2) 90%);
+        color: #1b2b42;
+      }
+
+      .chat-container {
+        background: #f8f9fb;
+        border: 2px solid #d9d9d9;
+        border-radius: 18px;
+        padding: 32px;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.07);
+      }
+
+      .agent-bubble {
+        background: #d9d9d9;
+        color: #1b2b42;
+        padding: 12px 16px;
+        border-radius: 12px;
+        max-width: 80%;
+      }
+
+      .user-bubble {
+        background: #6933d5;
+        color: white;
+        padding: 12px 16px;
+        border-radius: 12px;
+        max-width: 70%;
+        align-self: flex-end;
+      }
+
+      .chat-input {
+        background: #ffffff;
+        border: 2px solid #d9d9d9;
+        border-radius: 10px;
+        padding: 12px;
+        outline: none;
+        color: #1b2b42;
+      }
+
+      .chat-input:focus {
+        border-color: #6933d5;
+      }
+
+      .send-btn {
+        background: #6933d5;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 10px;
+      }
+
+      .resultado-btn-principal {
+        background: #ffc120;
+        padding: 14px;
+        border-radius: 10px;
+        font-weight: 700;
+        color: #1b2b42;
+        transition: 0.15s;
+      }
+
+      .resultado-btn-relacionada {
+        background: #47ba7f;
+        padding: 14px;
+        border-radius: 10px;
+        font-weight: 700;
+        color: #1b2b42;
+        transition: 0.15s;
+      }
+    </style>
+  </head>
+
+  <body class="p-4 md:p-6">
+    <div class="max-w-4xl mx-auto chat-container">
+      <!-- HEADER -->
+      <div class="flex flex-col md:flex-row md:items-center gap-4 mb-6">
+        <div class="w-20 h-20 md:w-24 md:h-24 bg-[#D9D9D9] rounded-lg flex items-center justify-center overflow-hidden mx-auto md:mx-0">
+          <img src="/assets/agente.png" alt="Logo" class="w-full h-full object-contain" />
+        </div>
+
+        <div class="text-center md:text-left">
+          <h1 class="text-2xl md:text-3xl font-bold text-[#1B2B42]">Especialista em Carreiras Tech</h1>
+          <p class="text-base md:text-lg text-[#1B2B42]/70">Fale sobre você, que ajudarei a encontrar uma carreira!</p>
+        </div>
+
+        <div class="md:ml-auto flex justify-center md:justify-end gap-2 w-full md:w-auto">
+          <button id="restartButton" class="px-4 py-2 bg-[#FFC120] text-[#1B2B42] font-semibold rounded-md w-full md:w-auto">Reiniciar</button>
+
+          <a id="backButton" href="https://laurapigosso.github.io/Deploy-Proxima-Parada/" class="px-4 py-2 bg-[#47ba7f] text-[#1B2B42] font-semibold rounded-md w-full md:w-auto inline-flex items-center justify-center">Voltar</a>
+        </div>
+      </div>
+
+      <!-- CHAT -->
+      <div id="chatWindow" class="w-full h-[65vh] border border-[#D9D9D9] bg-white rounded-xl p-4 overflow-y-auto flex flex-col gap-3">
+        <div class="agent-bubble">Carregando agente...</div>
+      </div>
+
+      <!-- INPUT -->
+      <div class="flex gap-3 mt-4">
+        <input id="chatInput" class="chat-input flex-grow" placeholder="Digite aqui..." />
+        <button id="sendButton" class="send-btn">Enviar</button>
+      </div>
+
+      <!-- RESULTADO FINAL -->
+      <div id="finalOptions" class="mt-6 hidden">
+        <p class="mb-2 font-semibold text-[#1B2B42]">Escolha uma das carreiras:</p>
+        <div id="careerButtons" class="flex flex-col gap-3"></div>
+      </div>
+    </div>
+
+    <!-- ============================= -->
+    <!-- JAVASCRIPT COMPLETO DO CHAT -->
+    <!-- ============================= -->
+    <script>
+      const API_KEY = "AIzaSyBkia7YPWbkNzcZIFIYNxKC8NM9Jr5YPCQ";
+      const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
+
+      let agentDefinition = null;
+      let history = [];
+      let questionCount = 0;
+      const MAX_QUESTIONS = 5;
+
+      const chatWindow = document.getElementById("chatWindow");
+      const chatInput = document.getElementById("chatInput");
+      const sendButton = document.getElementById("sendButton");
+      const finalOptions = document.getElementById("finalOptions");
+      const careerButtons = document.getElementById("careerButtons");
+
+      function addAgentBubble(text) {
+        const wrap = document.createElement("div");
+        wrap.className = "flex flex-col self-start";
+        const bubble = document.createElement("div");
+        bubble.className = "agent-bubble";
+        bubble.textContent = text;
+        wrap.appendChild(bubble);
+        chatWindow.appendChild(wrap);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+        return wrap;
+      }
+
+      function addUserBubble(text) {
+        const bubble = document.createElement("div");
+        bubble.className = "user-bubble";
+        bubble.textContent = text;
+        chatWindow.appendChild(bubble);
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+      }
+
+      async function loadAgent() {
+        const json = await fetch("career_agent.json");
+        agentDefinition = await json.json();
+
+        chatWindow.innerHTML = "";
+        const first = agentDefinition.agent.initial_question_examples[0];
+
+        addAgentBubble(first);
+        history.push({ role: "agent", text: first });
+
+        questionCount = 0;
+      }
+
+      sendButton.addEventListener("click", sendTyped);
+      chatInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          sendTyped();
+        }
+      });
+
+      async function sendTyped() {
+        const text = chatInput.value.trim();
+        if (!text) return;
+
+        addUserBubble(text);
+        history.push({ role: "user", text });
+
+        chatInput.value = "";
+        questionCount++;
+
+        if (questionCount < MAX_QUESTIONS) {
+          requestNextQuestion();
+        } else {
+          requestFinal();
+        }
+      }
+
+      async function requestNextQuestion() {
+        const prompt = `
+Você é ${agentDefinition.agent.name}, ${agentDefinition.agent.role}.
+
+Histórico:
+${history.map((m) => `${m.role}: ${m.text}`).join("\n")}
+
+Gere a próxima pergunta (curta, jovem, direta).
+Retorne APENAS JSON válido:
+{"pergunta":"..."}
+`;
+
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+          }),
+        });
+
+        const data = await res.json();
+        const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+
+        const json = extractJson(text);
+
+        const question = json.pergunta;
+
+        addAgentBubble(question);
+        history.push({ role: "agent", text: question });
+      }
+
+      async function requestFinal() {
+        const prompt = `
+Com base no histórico a seguir, gere um JSON com:
+principal, motivo_principal, relacionada_1, motivo_relacionada_1, relacionada_2, motivo_relacionada_2.
+
+Histórico:
+${history.map((m) => `${m.role}: ${m.text}`).join("\n")}
+
+Retorne APENAS JSON válido.
+`;
+
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+          }),
+        });
+
+        const data = await res.json();
+        const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+        const json = extractJson(text);
+
+        showFinalOptions(json);
+      }
+
+      function extractJson(text) {
+        const start = text.indexOf("{");
+        const end = text.lastIndexOf("}");
+        return JSON.parse(text.slice(start, end + 1));
+      }
+
+      function showFinalOptions(result) {
+        // Option A: no UI, auto-redirect
+        const id = result.principal;
+        try { localStorage.setItem('career_result_id', id); } catch(e){}
+        window.location.href = 'careers_dashboard.html';
+      } (Opção principal)`,
+            motivo: result.motivo_principal,
+            classe: "resultado-btn-principal",
+          },
+          {
+            key: result.relacionada_1,
+            label: result.relacionada_1,
+            motivo: result.motivo_relacionada_1,
+            classe: "resultado-btn-relacionada",
+          },
+          {
+            key: result.relacionada_2,
+            label: result.relacionada_2,
+            motivo: result.motivo_relacionada_2,
+            classe: "resultado-btn-relacionada",
+          },
+        ];
+
+        items.forEach((c) => {
+          const wrap = document.createElement("div");
+
+          const btn = document.createElement("button");
+          btn.className = c.classe;
+          btn.textContent = c.label;
+          btn.onclick = () => { localStorage.setItem('career_result_id', c.key); window.location.href = 'careers_dashboard.html'; };
+
+          const desc = document.createElement("div");
+          desc.className = "text-sm text-[#1B2B42]/70 mt-1 mb-2";
+          desc.textContent = c.motivo;
+
+          wrap.appendChild(btn);
+          wrap.appendChild(desc);
+          careerButtons.appendChild(wrap);
+        });
+      }
+
+      document.getElementById("backButton").onclick = () => {
+        window.location.href = "https://laurapigosso.github.io/Deploy-Proxima-Parada/";
+      };
+
+      document.getElementById("restartButton").onclick = async () => {
+        chatWindow.innerHTML = "";
+        history = [];
+        questionCount = 0;
+        finalOptions.classList.add("hidden");
+        careerButtons.innerHTML = "";
+
+        const first = agentDefinition.agent.initial_question_examples[0];
+        addAgentBubble(first);
+        history.push({ role: "agent", text: first });
+      };
+
+      loadAgent();
+    </script>
+  </body>
+</html>
