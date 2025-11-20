@@ -1,301 +1,477 @@
-<!DOCTYPE html>
 <html lang="pt-br">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Agente de Carreira</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Especialista em Carreiras Tech</title>
 
-    <!-- Fonte -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
+    <!-- TAILWIND -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FONTE -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet" />
+
+    <!-- ÍCONES -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
       body {
-        margin: 0;
         font-family: "Atkinson Hyperlegible", sans-serif;
-        background: #f0f4ff;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .header {
-        background: #2c70d3;
-        color: white;
-        padding: 14px 20px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-size: 20px;
-        font-weight: bold;
-      }
-
-      #backButton {
-        background: white;
-        color: #2c70d3;
-        padding: 8px 16px;
-        border-radius: 10px;
-        cursor: pointer;
-        font-weight: 700;
-        border: 2px solid white;
-      }
-
-      .chat-wrap {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        padding: 20px;
-        overflow-y: auto;
-        gap: 12px;
-      }
-
-      .agent-bubble {
-        background: #fff;
-        padding: 12px 16px;
-        border-radius: 12px;
-        max-width: 70%;
+        background: linear-gradient(90deg, rgba(211, 192, 44, 0.2) 10%, rgba(255, 255, 255, 1) 51%, rgba(78, 156, 140, 0.2) 90%);
         color: #1b2b42;
-        box-shadow: 0px 2px 8px #00000018;
       }
-
+      .chat-container {
+        background: #f8f9fb;
+        border: 2px solid #d9d9d9;
+        border-radius: 18px;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.07);
+        height: 85vh;
+        display: flex;
+        flex-direction: column;
+      }
+      .agent-bubble {
+        background: #d9d9d9;
+        color: #1b2b42;
+        padding: 12px 16px;
+        border-radius: 12px;
+        max-width: 85%;
+        line-height: 1.5;
+        animation: fadeIn 0.3s ease;
+      }
       .user-bubble {
-        background: #2c70d3;
+        background: #6933d5;
         color: white;
         padding: 12px 16px;
         border-radius: 12px;
-        max-width: 70%;
+        max-width: 80%;
         align-self: flex-end;
-        box-shadow: 0px 2px 8px #00000018;
+        animation: fadeIn 0.3s ease;
       }
-
-      .input-area {
-        display: flex;
-        gap: 10px;
-        padding: 16px;
+      .chat-input {
         background: #fff;
-        border-top: 2px solid #e2e8f0;
-      }
-
-      #chatInput {
-        flex: 1;
-        padding: 12px 14px;
+        border: 2px solid #d9d9d9;
         border-radius: 10px;
-        border: 1px solid #cbd5e1;
+        padding: 12px;
         outline: none;
-        font-size: 16px;
+        color: #1b2b42;
+        transition: border-color 0.2s;
       }
-
-      #sendButton {
-        background: #2c70d3;
+      .chat-input:focus {
+        border-color: #6933d5;
+      }
+      .send-btn {
+        background: #6933d5;
         color: white;
-        padding: 10px 18px;
+        padding: 12px 24px;
         border-radius: 10px;
-        border: none;
-        cursor: pointer;
-        font-weight: 700;
+        font-weight: bold;
+        transition: background 0.2s;
       }
-
-      #restartButton {
-        margin-left: 20px;
-        margin-top: 8px;
-        background: #edf2ff;
-        border: 1px solid #b0c4ff;
-        padding: 6px 14px;
-        border-radius: 8px;
-        cursor: pointer;
+      .send-btn:hover {
+        background: #5626b5;
+      }
+      .send-btn:disabled {
+        background: #a0a0a0;
+        cursor: not-allowed;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
     </style>
   </head>
 
-  <body>
-    <div class="header">
-      Agente Vocacional Tech
-      <button id="backButton">Voltar</button>
-    </div>
+  <body class="p-2 md:p-6 h-screen flex items-center justify-center">
+    <div class="w-full max-w-4xl chat-container p-4 md:p-8 relative">
+      <!-- HEADER -->
+      <div class="flex flex-col md:flex-row md:items-center gap-4 mb-4 flex-shrink-0 border-b border-gray-200 pb-4">
+        <!-- NOVA IMAGEM DO AGENTE -->
+        <div class="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center overflow-hidden shrink-0">
+          <img src="assets/agente.png" alt="Agente" class="w-full h-full object-cover" />
+        </div>
 
-    <div id="chatWindow" class="chat-wrap"></div>
+        <div class="flex-grow text-center md:text-left">
+          <h1 class="text-xl md:text-2xl font-bold text-[#1B2B42]">Orientador de Carreira Tech</h1>
+          <p class="text-sm md:text-base text-[#1B2B42]/70">Descubra seu lugar na tecnologia.</p>
+        </div>
 
-    <button id="restartButton">Reiniciar</button>
+        <!-- BOTÕES -->
+        <div class="flex justify-center gap-2">
+          <!-- BOTÃO VOLTAR MODIFICADO -->
+          <button
+            onclick="window.location.href='https://laurapigosso.github.io/Deploy-Proxima-Parada/'"
+            class="px-3 py-2 bg-gray-300 text-[#1B2B42] text-sm font-bold rounded-md hover:bg-gray-400 transition flex items-center gap-2"
+          >
+            <i data-lucide="arrow-left" class="w-4 h-4"></i> Voltar
+          </button>
 
-    <div class="input-area">
-      <input id="chatInput" placeholder="Digite sua resposta..." />
-      <button id="sendButton">Enviar</button>
+          <!-- REINICIAR -->
+          <button
+            id="restartButton"
+            class="px-3 py-2 bg-[#FFC120] text-[#1B2B42] text-sm font-bold rounded-md hover:bg-yellow-500 transition flex items-center gap-2"
+          >
+            <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Reiniciar
+          </button>
+        </div>
+      </div>
+
+      <!-- CHAT -->
+      <div id="chatWindow" class="flex-grow overflow-y-auto flex flex-col gap-3 p-2">
+        <div class="agent-bubble flex items-center gap-2"><i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Iniciando agente...</div>
+      </div>
+
+      <!-- INPUT -->
+      <div class="mt-4 flex gap-2 flex-shrink-0">
+        <input id="chatInput" class="chat-input flex-grow" placeholder="Digite sua resposta..." autocomplete="off" />
+        <button id="sendButton" class="send-btn flex items-center gap-2">Enviar <i data-lucide="send" class="w-4 h-4"></i></button>
+      </div>
     </div>
 
     <script>
-      const API_KEY = "AIzaSyBkia7YPWbkNzcZIFIYNxKC8NM9Jr5YPCQ";
+      lucide.createIcons();
 
-      // Modelo que funciona (o seu antigo)
-      const API_URL =
-        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" +
-        API_KEY;
+      /**************************************************************************
+       * CONFIGURAÇÃO E DADOS
+       **************************************************************************/
 
-      let historico = [];
-      let contadorPerguntas = 0;
-      const LIMITE = 5;
+      const apiKey = "AIzaSyBkia7YPWbkNzcZIFIYNxKC8NM9Jr5YPCQ";
+      const MODEL = "gemini-2.5-flash-preview-09-2025";
+
+      const CAREER_LIST = [
+        { id: "front-end", title: "Desenvolvedor Front-end" },
+        { id: "back-end", title: "Desenvolvedor Back-end" },
+        { id: "full-stack", title: "Desenvolvedor Full Stack" },
+        { id: "mobile-android", title: "Desenvolvedor Mobile (Android)" },
+        { id: "mobile-ios", title: "Desenvolvedor Mobile (iOS)" },
+        { id: "mobile-flutter", title: "Desenvolvedor Mobile (Flutter)" },
+        { id: "qa", title: "Analista de QA" },
+        { id: "suporte-tecnico", title: "Analista de Suporte Técnico" },
+        { id: "analista-dados", title: "Analista de Dados" },
+        { id: "analista-bi", title: "Analista de BI" },
+        { id: "engenheiro-dados", title: "Engenheiro de Dados" },
+        { id: "devops", title: "DevOps / SRE" },
+        { id: "infraestrutura", title: "Analista de Infraestrutura" },
+        { id: "cybersecurity", title: "Analista de Cybersecurity" },
+        { id: "ux-ui", title: "UX/UI Designer" },
+        { id: "product-owner", title: "Product Owner" },
+        { id: "scrum-master", title: "Scrum Master" },
+        { id: "analista-sistemas", title: "Analista de Sistemas" },
+        { id: "java-dev", title: "Desenvolvedor Java" },
+        { id: "dotnet-dev", title: "Desenvolvedor .NET" },
+        { id: "php-dev", title: "Desenvolvedor PHP" },
+        { id: "python-dev", title: "Desenvolvedor Python" },
+        { id: "ruby-dev", title: "Desenvolvedor Ruby" },
+        { id: "go-dev", title: "Desenvolvedor Go" },
+        { id: "salesforce-dev", title: "Desenvolvedor Salesforce" },
+        { id: "data-scientist", title: "Cientista de Dados" },
+        { id: "ml-engineer", title: "Engenheiro de Machine Learning" },
+        { id: "cloud-architect", title: "Arquiteto de Cloud" },
+        { id: "blockchain-dev", title: "Desenvolvedor Blockchain" },
+        { id: "low-code", title: "Desenvolvedor Low-Code/No-Code" },
+        { id: "tech-lead", title: "Tech Lead" },
+        { id: "cto", title: "CTO / Diretor de Tecnologia" },
+      ];
+
+      const agentDefinition = {
+        agent: {
+          name: "TechCareerAI",
+          role: "Orientador Acadêmico de Desenvolvimento e Carreiras Tech",
+          tone: "formal, educado, professoral",
+          initial_question:
+            "Para que eu possa compreendê-lo melhor e orientá-lo com precisão, poderia me dizer o que deseja para o seu futuro, seja em estilo de vida, rotina ou realização pessoal?",
+          rules: `
+        1. Você é um professor experiente e acolhedor.
+        2. NÃO faça perguntas técnicas.
+        3. Investigue aspectos humanos: criatividade, lógica, organização, social.
+        4. Faça perguntas curtas (max 25 palavras).
+      `,
+        },
+      };
+
+      let history = [];
+      let questionCount = 0;
+      const MAX_QUESTIONS = 5;
 
       const chatWindow = document.getElementById("chatWindow");
       const chatInput = document.getElementById("chatInput");
       const sendButton = document.getElementById("sendButton");
+      const restartButton = document.getElementById("restartButton");
 
-      /* ---------------------------- BUBBLES ---------------------------- */
-      function addAgentBubble(text) {
+      /**************************************************************************
+       * FUNÇÕES DE UI
+       **************************************************************************/
+
+      function scrollToBottom() {
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+      }
+
+      function addAgentBubble(text, isTyping = false) {
         const wrap = document.createElement("div");
-        wrap.className = "flex flex-col self-start";
-
+        wrap.className = "flex flex-col self-start w-full";
         const bubble = document.createElement("div");
-        bubble.className = "agent-bubble";
-        bubble.textContent = text;
-
+        bubble.className = `agent-bubble ${isTyping ? "typing" : ""}`;
+        bubble.innerHTML = text;
         wrap.appendChild(bubble);
         chatWindow.appendChild(wrap);
-        chatWindow.scrollTop = chatWindow.scrollHeight;
+        scrollToBottom();
+        return wrap;
+      }
+
+      function addErrorBubble(text) {
+        const wrap = document.createElement("div");
+        wrap.className = "flex flex-col self-start w-full";
+        const bubble = document.createElement("div");
+        bubble.className = "agent-bubble error-bubble";
+        bubble.innerHTML = `<div class="flex items-center gap-2"><i data-lucide="alert-circle" class="w-4 h-4"></i> ${text}</div>`;
+        wrap.appendChild(bubble);
+        chatWindow.appendChild(wrap);
+        lucide.createIcons();
+        scrollToBottom();
+        return wrap;
       }
 
       function addUserBubble(text) {
         const bubble = document.createElement("div");
         bubble.className = "user-bubble";
         bubble.textContent = text;
-
         chatWindow.appendChild(bubble);
-        chatWindow.scrollTop = chatWindow.scrollHeight;
+        scrollToBottom();
       }
 
-      /* ---------------------------- GEMINI REQUEST ---------------------------- */
-      async function enviarParaGemini(prompt) {
-        const body = {
-          contents: [
-            {
-              parts: [{ text: prompt }],
-            },
-          ],
-        };
+      /**************************************************************************
+       * MODAL + REDIRECT (ATUALIZADO PARA MOSTRAR O TÍTULO)
+       **************************************************************************/
 
-        const resposta = await fetch(API_URL, {
-          method: "POST",
-          body: JSON.stringify(body),
+      function saveAndRedirect(careerId, reason) {
+        // MAPEIA ID → TÍTULO
+        const careerObj = CAREER_LIST.find((c) => c.id === careerId);
+        const careerTitle = careerObj ? careerObj.title : careerId;
+
+        // Salva ID (dashboard usa o ID!)
+        localStorage.setItem("career_result_id", careerId);
+        localStorage.setItem("career_result_reason", reason);
+
+        chatInput.disabled = true;
+        sendButton.disabled = true;
+
+        const overlay = document.createElement("div");
+        overlay.id = "resultModal";
+
+        overlay.className = "fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 transition-opacity duration-500 opacity-0";
+
+        overlay.innerHTML = `
+      <div class="bg-white rounded-2xl p-8 max-w-md w-[90%] shadow-2xl transform scale-90 transition-transform duration-500 flex flex-col items-center text-center relative overflow-hidden">
+
+        <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#47ba7f] to-[#6933d5]"></div>
+
+        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-5 shadow-inner">
+          <i data-lucide="check" class="w-10 h-10 text-[#47ba7f]"></i>
+        </div>
+
+        <h2 class="text-2xl font-bold text-[#1B2B42] mb-1">Perfil Identificado!</h2>
+        <p class="text-gray-500 text-sm mb-6">Com base nas suas respostas, sua carreira ideal é:</p>
+
+        <div class="bg-gradient-to-br from-gray-50 to-white p-5 rounded-xl border border-gray-200 w-full mb-6 shadow-sm">
+           <p class="text-2xl font-black text-[#6933d5] break-words">${careerTitle}</p>
+           <p class="text-gray-600 text-xs mt-2 leading-relaxed border-t border-gray-100 pt-2 text-justify">"${reason}"</p>
+        </div>
+
+        <div class="w-full space-y-2">
+            <div class="flex justify-between text-xs text-gray-400 uppercase font-bold tracking-wider">
+                <span>Redirecionando para o Dashboard</span>
+                <span id="timerText">3s</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                <div id="progressBar" class="bg-[#47ba7f] h-full rounded-full w-0 transition-all duration-[3000ms] ease-linear"></div>
+            </div>
+        </div>
+      </div>
+    `;
+
+        document.body.appendChild(overlay);
+        lucide.createIcons();
+
+        requestAnimationFrame(() => {
+          overlay.classList.remove("opacity-0");
+          const content = overlay.querySelector("div");
+          content.classList.remove("scale-90");
+          content.classList.add("scale-100");
+
+          setTimeout(() => {
+            document.getElementById("progressBar").style.width = "100%";
+          }, 100);
         });
 
-        const dados = await resposta.json();
-
-        try {
-          return dados.candidates[0].content.parts[0].text.trim();
-        } catch {
-          return "";
-        }
-      }
-
-      /* ---------------------------- INICIAR AGENTE ---------------------------- */
-      async function iniciarFluxo() {
-        const arquivo = await fetch("career_agent.json");
-        const json = await arquivo.json();
-
-        historico = [];
-        contadorPerguntas = 0;
-        chatWindow.innerHTML = "";
-
-        const perguntaInicial = json.agent.initial_question_examples[0];
-
-        addAgentBubble(perguntaInicial);
-
-        historico.push("AGENTE: " + perguntaInicial);
-
-        // 🔥 foco automático
-        chatInput.focus();
-      }
-
-      /* ---------------------------- ENVIAR MENSAGEM ---------------------------- */
-      async function enviarMensagem() {
-        const texto = chatInput.value.trim();
-        if (!texto) return;
-
-        addUserBubble(texto);
-        historico.push("USUARIO: " + texto);
-
-        chatInput.value = "";
-        contadorPerguntas++;
-
-        if (contadorPerguntas < LIMITE) {
-          gerarProximaPergunta();
-        } else {
-          gerarResultadoFinal();
-        }
-      }
-
-      sendButton.onclick = enviarMensagem;
-      chatInput.onkeydown = (e) => {
-        if (e.key === "Enter") enviarMensagem();
-      };
-
-      /* ---------------------------- PRÓXIMA PERGUNTA ---------------------------- */
-      async function gerarProximaPergunta() {
-        const prompt = `
-Você é um orientador vocacional tech.
-Histórico:
-${historico.join("\n")}
-
-Gere a próxima pergunta curta, no formato:
-{"pergunta":"texto"}
-`;
-
-        const resposta = await enviarParaGemini(prompt);
-        const json = extrairJSON(resposta);
-
-        if (json?.pergunta) {
-          addAgentBubble(json.pergunta);
-          historico.push("AGENTE: " + json.pergunta);
-        } else {
-          addAgentBubble("Não entendi, poderia repetir?");
-        }
-      }
-
-      /* ---------------------------- FINAL ---------------------------- */
-      async function gerarResultadoFinal() {
-        const prompt = `
-Com base no histórico, gere o resultado final:
-
-{
- "principal": "id-da-carreira",
- "motivo_principal": "motivo curto"
-}
-
-Apenas JSON.
-`;
-
-        const resposta = await enviarParaGemini(prompt);
-        const json = extrairJSON(resposta);
-
-        if (json?.principal) {
-          localStorage.setItem("career_result_id", json.principal);
+        setTimeout(() => {
           window.location.href = "careers_dashboard.html";
-        } else {
-          addAgentBubble("Não consegui identificar uma carreira final.");
-        }
+        }, 3200);
       }
 
-      /* ---------------------------- JSON CLEAN ---------------------------- */
-      function extrairJSON(txt) {
+      /**************************************************************************
+       * IA GEMINI
+       **************************************************************************/
+
+      async function callGemini(prompt) {
+        let url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`;
+        url += `?key=${apiKey}`;
+
+        const payload = { contents: [{ parts: [{ text: prompt }] }] };
+
         try {
-          const i = txt.indexOf("{");
-          const f = txt.lastIndexOf("}");
-          return JSON.parse(txt.substring(i, f + 1));
-        } catch {
+          const response = await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          });
+
+          if (!response.ok) throw new Error(`Erro API (${response.status})`);
+
+          const data = await response.json();
+          return data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+        } catch (error) {
+          console.error("Gemini Exception:", error);
           return null;
         }
       }
 
-      /* ---------------------------- BOTÕES ---------------------------- */
-      document.getElementById("restartButton").onclick = iniciarFluxo;
+      function safeJsonParse(text) {
+        if (!text) return null;
+        let cleanText = text
+          .replace(/```json/g, "")
+          .replace(/```/g, "")
+          .trim();
+        try {
+          return JSON.parse(cleanText);
+        } catch (e) {
+          return null;
+        }
+      }
 
-      document.getElementById("backButton").onclick = () => {
-        window.location.href =
-          "https://laurapigosso.github.io/Deploy-Proxima-Parada/";
-      };
+      /**************************************************************************
+       * LÓGICA PRINCIPAL
+       **************************************************************************/
 
-      /* ---------------------------- INICIAR ---------------------------- */
-      iniciarFluxo();
+      async function startSession() {
+        chatWindow.innerHTML = "";
+
+        const existingModal = document.getElementById("resultModal");
+        if (existingModal) existingModal.remove();
+
+        history = [];
+        questionCount = 0;
+        chatInput.disabled = false;
+        sendButton.disabled = false;
+        chatInput.value = "";
+        chatInput.focus();
+
+        const intro = agentDefinition.agent.initial_question;
+        addAgentBubble(intro);
+        history.push({ role: "model", parts: [{ text: intro }] });
+      }
+
+      async function handleUserMessage() {
+        const text = chatInput.value.trim();
+        if (!text) return;
+
+        addUserBubble(text);
+        chatInput.value = "";
+        history.push({ role: "user", parts: [{ text: text }] });
+        questionCount++;
+
+        const loadingWrap = addAgentBubble(
+          `<div class="flex items-center gap-2"><i data-lucide="loader" class="animate-spin w-4 h-4"></i> Analisando...</div>`,
+          true
+        );
+        lucide.createIcons();
+
+        if (questionCount < MAX_QUESTIONS) {
+          await generateNextQuestion(loadingWrap);
+        } else {
+          await generateFinalResult(loadingWrap);
+        }
+      }
+
+      async function generateNextQuestion(loadingElement) {
+        const systemInstruction = `
+      CONTEXTO:
+      Você é ${agentDefinition.agent.name}, ${agentDefinition.agent.role}.
+      Tom: ${agentDefinition.agent.tone}.
+      REGRAS:
+      ${agentDefinition.agent.rules}
+      TAREFA:
+      Com base na última resposta do usuário, gere uma nova pergunta para aprofundar no perfil comportamental (NÃO TÉCNICO).
+      FORMATO DE SAÍDA (JSON Obrigatório):
+      {"pergunta": "sua pergunta aqui"}
+    `;
+
+        let promptContext = "Histórico:\n";
+        history.forEach((h) => (promptContext += `${h.role}: ${h.parts[0].text}\n`));
+
+        const responseText = await callGemini(systemInstruction + "\n" + promptContext);
+        loadingElement.remove();
+
+        if (responseText) {
+          const json = safeJsonParse(responseText);
+          const qText = json && json.pergunta ? json.pergunta : responseText;
+          addAgentBubble(qText);
+          history.push({ role: "model", parts: [{ text: qText }] });
+        } else {
+          addErrorBubble("Falha na conexão com a IA. Tente novamente.");
+          questionCount--;
+        }
+      }
+
+      async function generateFinalResult(loadingElement) {
+        const idsListString = CAREER_LIST.map((c) => `${c.id} (${c.title})`).join(", ");
+
+        const systemInstruction = `
+      Você é um especialista em carreiras. O usuário respondeu a 5 perguntas.
+      TAREFA:
+      Escolha apenas 1 carreira IDEAL baseada na lista:
+      [${idsListString}]
+      FORMATO DE SAÍDA:
+      {
+        "principal": "ID_APENAS",
+        "motivo_principal": "frase curta (até 20 palavras)"
+      }
+    `;
+
+        let promptContext = "Histórico:\n";
+        history.forEach((h) => (promptContext += `${h.role}: ${h.parts[0].text}\n`));
+
+        const responseText = await callGemini(systemInstruction + "\n" + promptContext);
+        loadingElement.remove();
+
+        if (responseText) {
+          const json = safeJsonParse(responseText);
+          if (json?.principal) {
+            saveAndRedirect(json.principal, json.motivo_principal);
+          } else {
+            addAgentBubble("Não consegui concluir. Vamos tentar mais uma pergunta?");
+            questionCount--;
+          }
+        } else {
+          addErrorBubble("Erro ao conectar. Tente de novo.");
+        }
+      }
+
+      sendButton.addEventListener("click", handleUserMessage);
+      chatInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          handleUserMessage();
+        }
+      });
+      restartButton.addEventListener("click", startSession);
+
+      startSession();
     </script>
   </body>
 </html>
