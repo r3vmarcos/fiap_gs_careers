@@ -10,6 +10,7 @@
         --dark: #0f1724;
         --bg: #f3f4f6;
         --card: #ffffff;
+        --purple: #673fb7;
         --gap: 12px;
       }
 
@@ -174,7 +175,7 @@
       .btn {
         background: var(--blue);
         color: white;
-        padding: 10px 16px;
+        padding: 12px 16px;
         border-radius: 10px;
         border: 0;
         cursor: pointer;
@@ -201,7 +202,7 @@
   <body>
     <div class="container">
       <div class="header">
-        <a id="externalBack" href="https://laurapigosso.github.io/Deploy-Proxima-Parada/" class="btn" style="background:#fff;color:var(--blue);border:2px solid var(--blue);margin-left:12px">Voltar Site</a>
+        <a id="externalBack" href="https://laurapigosso.github.io/Deploy-Proxima-Parada/" class="btn" style="background: var(--purple); color: #fff">VOLTAR</a>
         <div class="title">Teste Vocacional Tech</div>
         <div class="progress-wrap" style="flex: 1">
           <div class="progress-base"><div id="progress" class="progress-fill"></div></div>
@@ -451,75 +452,103 @@
 
       /* finalize: compute scores and redirect to gs_dashboard.html?id=... */
       function finalize() {
-  const all = appState.selections.flat();
-  const score = {};
-  all.forEach(opt => {
-    (opt.careers || []).forEach(c => {
-      score[c] = (score[c] || 0) + 1;
-    });
-  });
-  const entries = Object.entries(score);
-  if (entries.length === 0) {
-    localStorage.setItem('career_result_id', top);
-  window.location.href = 'careers_dashboard.html';
-    return;
-  }
-  entries.sort((a, b) => b[1] - a[1]);
-  let candidate = entries[0][0];
-  const ALLOWED = [
-    "front-end","back-end","full-stack","mobile-android","mobile-ios","mobile-flutter",
-    "qa","suporte-tecnico","analista-dados","analista-bi","engenheiro-dados","devops",
-    "infraestrutura","cybersecurity","ux-ui","product-owner","scrum-master","analista-sistemas",
-    "java-dev","dotnet-dev","php-dev","python-dev","ruby-dev","go-dev","salesforce-dev","data-analyst"
-  ];
-  const ALLOWED_LOWER = ALLOWED.map(x => x.toLowerCase());
-  function normalizeId(id) {
-    if (!id) return id;
-    let s = String(id).toLowerCase().trim();
-    const synonyms = {
-      "backend": "back-end",
-      "frontend": "front-end",
-      "fullstack": "full-stack",
-      "devops-engineer": "devops",
-      "analista-qa": "qa",
-      "analista-suporte": "suporte-tecnico",
-      "data-analyst": "analista-dados",
-      "desenvolvedor-python": "python-dev",
-      "desenvolvedor-java": "java-dev"
-    };
-    if (synonyms[s]) return synonyms[s];
-    s = s.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    s = s.replace(/\s+/g, "-").replace(/_+/g, "-");
-    return s;
-  }
-  let top = candidate;
-  if (!ALLOWED_LOWER.includes(top.toLowerCase())) {
-    const normalized = normalizeId(top);
-    if (ALLOWED_LOWER.includes(normalized.toLowerCase())) {
-      top = ALLOWED[ALLOWED_LOWER.indexOf(normalized.toLowerCase())];
-    } else {
-      const topScore = entries[0][1];
-      const tied = entries.filter(e => e[1] === topScore).map(e => e[0]);
-      let found = null;
-      for (const t of tied) {
-        const nt = normalizeId(t);
-        if (ALLOWED_LOWER.includes(nt.toLowerCase())) { found = nt; break; }
-      }
-      if (found) {
-        top = found;
-      } else {
-        const sc = new Set(all.flatMap(o => (o.careers || []).map(x => normalizeId(x))));
-        for (const a of ALLOWED) {
-          if (sc.has(a) || sc.has(a.toLowerCase())) { top = a; break; }
+        const all = appState.selections.flat();
+        const score = {};
+        all.forEach((opt) => {
+          (opt.careers || []).forEach((c) => {
+            score[c] = (score[c] || 0) + 1;
+          });
+        });
+        const entries = Object.entries(score);
+        if (entries.length === 0) {
+          localStorage.setItem("career_result_id", top);
+          window.location.href = "careers_dashboard.html";
+          return;
         }
+        entries.sort((a, b) => b[1] - a[1]);
+        let candidate = entries[0][0];
+        const ALLOWED = [
+          "front-end",
+          "back-end",
+          "full-stack",
+          "mobile-android",
+          "mobile-ios",
+          "mobile-flutter",
+          "qa",
+          "suporte-tecnico",
+          "analista-dados",
+          "analista-bi",
+          "engenheiro-dados",
+          "devops",
+          "infraestrutura",
+          "cybersecurity",
+          "ux-ui",
+          "product-owner",
+          "scrum-master",
+          "analista-sistemas",
+          "java-dev",
+          "dotnet-dev",
+          "php-dev",
+          "python-dev",
+          "ruby-dev",
+          "go-dev",
+          "salesforce-dev",
+          "data-analyst",
+        ];
+        const ALLOWED_LOWER = ALLOWED.map((x) => x.toLowerCase());
+        function normalizeId(id) {
+          if (!id) return id;
+          let s = String(id).toLowerCase().trim();
+          const synonyms = {
+            backend: "back-end",
+            frontend: "front-end",
+            fullstack: "full-stack",
+            "devops-engineer": "devops",
+            "analista-qa": "qa",
+            "analista-suporte": "suporte-tecnico",
+            "data-analyst": "analista-dados",
+            "desenvolvedor-python": "python-dev",
+            "desenvolvedor-java": "java-dev",
+          };
+          if (synonyms[s]) return synonyms[s];
+          s = s.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+          s = s.replace(/\s+/g, "-").replace(/_+/g, "-");
+          return s;
+        }
+        let top = candidate;
+        if (!ALLOWED_LOWER.includes(top.toLowerCase())) {
+          const normalized = normalizeId(top);
+          if (ALLOWED_LOWER.includes(normalized.toLowerCase())) {
+            top = ALLOWED[ALLOWED_LOWER.indexOf(normalized.toLowerCase())];
+          } else {
+            const topScore = entries[0][1];
+            const tied = entries.filter((e) => e[1] === topScore).map((e) => e[0]);
+            let found = null;
+            for (const t of tied) {
+              const nt = normalizeId(t);
+              if (ALLOWED_LOWER.includes(nt.toLowerCase())) {
+                found = nt;
+                break;
+              }
+            }
+            if (found) {
+              top = found;
+            } else {
+              const sc = new Set(all.flatMap((o) => (o.careers || []).map((x) => normalizeId(x))));
+              for (const a of ALLOWED) {
+                if (sc.has(a) || sc.has(a.toLowerCase())) {
+                  top = a;
+                  break;
+                }
+              }
+            }
+          }
+        }
+        if (!ALLOWED.includes(top)) top = "product-owner";
+        localStorage.setItem("career_result_id", top);
+        localStorage.setItem("career_result_id", top);
+        window.location.href = "careers_dashboard.html";
       }
-    }
-  }
-  if (!ALLOWED.includes(top)) top = "product-owner";
-  localStorage.setItem('career_result_id', top);
-  localStorage.setItem('career_result_id', top);
-  window.location.href = 'careers_dashboard.html';
-}
 
       /* initialize */
       document.addEventListener("DOMContentLoaded", () => {
