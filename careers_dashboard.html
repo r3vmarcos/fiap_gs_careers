@@ -118,6 +118,12 @@
       #closeModal:hover {
         background: rgba(0, 0, 0, 0.6);
       }
+
+      #skillsChart,
+      #seniorityChart {
+        height: 240px !important;
+        max-height: 240px !important;
+      }
     </style>
   </head>
 
@@ -125,72 +131,94 @@
     <div id="exportArea">
       <script>
         let CAREERS = {};
-      async function loadCareersAndRender() {
-        try {
-          const res = await fetch('careers.json');
-          const data = await res.json();
-          CAREERS = data;
-          renderFromStorageOrParam();
-        } catch (e) {
-          console.error('Erro ao carregar careers.json', e);
-          // fallback: try to use embedded CAREERS if present
+        async function loadCareersAndRender() {
+          try {
+            const res = await fetch("careers.json");
+            const data = await res.json();
+            CAREERS = data;
+            renderFromStorageOrParam();
+          } catch (e) {
+            console.error("Erro ao carregar careers.json", e);
+            // fallback: try to use embedded CAREERS if present
+          }
         }
-      }
 
-      function getResultId() {
-        const fromStorage = localStorage.getItem('career_result_id');
-        if (fromStorage) return fromStorage;
-        const stored = localStorage.getItem('career_result_id');
-      let id = stored || (new URLSearchParams(window.location.search)).get('id');
-        return params.get('id');
-      }
-
-      function renderFromStorageOrParam() {
-        const id = getResultId() || Object.keys(CAREERS)[0];
-        renderCareer(id);
-      }
-
-      function renderCareer(id) {
-        const c = CAREERS[id];
-        if (!c) {
-          console.warn('Career id not found:', id);
-          document.getElementById('careerTitle').textContent = 'Carreira não encontrada';
-          return;
+        function getResultId() {
+          const stored = localStorage.getItem("career_result_id");
+          if (stored) return stored;
+          const params = new URLSearchParams(window.location.search);
+          return params.get("id");
         }
-        // populate fields (salaryAvg, demandLevel, remotePct, growthPct, lists, videos)
-        document.getElementById('careerTitle').textContent = c.title || id;
-        document.getElementById('salaryAvg').textContent = c.salaryAvg ? brl(c.salaryAvg) : '-';
-        document.getElementById('demandLevel').textContent = c.demandLevel || '-';
-        document.getElementById('remotePct').textContent = (c.remotePercent !== undefined) ? (c.remotePercent + '%') : '-';
-        document.getElementById('growthPct').textContent = (c.growth !== undefined) ? (c.growth + '%') : '-';
-        // skills chart
-        const skills = c.skills ? c.skills.map(s=>s.name) : [];
-        const scores = c.skills ? c.skills.map(s=>s.score) : [];
-        if (skillsChart) skillsChart.destroy();
-        const ctx = document.getElementById('skillsChart').getContext('2d');
-        skillsChart = new Chart(ctx, { type: 'bar', data: { labels: skills, datasets:[{ label:'Relevância', data: scores }] }, options:{ responsive:true, maintainAspectRatio:false } });
-        // seniority chart
-        const seniorNames = c.seniority ? Object.keys(c.seniority) : [];
-        const seniorVals = c.seniority ? Object.values(c.seniority) : [];
-        if (seniorityChart) seniorityChart.destroy();
-        const ctx2 = document.getElementById('seniorityChart').getContext('2d');
-            seniorityChart = new Chart(ctx2, { type: 'pie', data: { labels: seniorNames, datasets:[{ data: seniorVals }] }, options:{ responsive:true, maintainAspectRatio:false } });
-        // universities
-        const ul = document.getElementById('universitiesList'); ul.innerHTML='';
-        (c.universities||[]).forEach(u=>{ const li=document.createElement('li'); li.innerHTML = `<a href="${u.url}" target="_blank">${u.name}</a>`; ul.appendChild(li); });
-        const cl = document.getElementById('coursesList'); cl.innerHTML='';
-        (c.courses||[]).forEach(u=>{ const li=document.createElement('li'); li.innerHTML = `<a href="${u.url}" target="_blank">${u.name}</a>`; cl.appendChild(li); });
-        // videos thumbnails
-        currentVideos = c.videos || [];
-        for (let i=0;i<3;i++) {
-          const el = document.getElementById('thumb'+(i+1));
-          if (currentVideos[i]) el.src = getThumb(currentVideos[i]); else el.src='';
+
+        function renderFromStorageOrParam() {
+          const id = getResultId() || Object.keys(CAREERS)[0];
+          renderCareer(id);
         }
-      }
 
-      // start loader
-      loadCareersAndRender();
+        function renderCareer(id) {
+          if (!CAREERS[id]) {
+            alert("ID de carreira inválido ou não encontrado.");
+            return;
+          }
 
+          const c = CAREERS[id];
+          if (!c) {
+            console.warn("Career id not found:", id);
+            document.getElementById("careerTitle").textContent = "Carreira não encontrada";
+            return;
+          }
+          // populate fields (salaryAvg, demandLevel, remotePct, growthPct, lists, videos)
+          document.getElementById("careerTitle").textContent = c.title || id;
+          document.getElementById("salaryAvg").textContent = c.salaryAvg ? brl(c.salaryAvg) : "-";
+          document.getElementById("demandLevel").textContent = c.demandLevel || "-";
+          document.getElementById("remotePct").textContent = c.remotePercent !== undefined ? c.remotePercent + "%" : "-";
+          document.getElementById("growthPct").textContent = c.growth !== undefined ? c.growth + "%" : "-";
+          // skills chart
+          const skills = c.skills ? c.skills.map((s) => s.name) : [];
+          const scores = c.skills ? c.skills.map((s) => s.score) : [];
+          if (skillsChart) skillsChart.destroy();
+          const ctx = document.getElementById("skillsChart").getContext("2d");
+          skillsChart = new Chart(ctx, {
+            type: "bar",
+            data: { labels: skills, datasets: [{ label: "Relevância", data: scores }] },
+            options: { responsive: true, maintainAspectRatio: false },
+          });
+          // seniority chart
+          const seniorNames = c.seniority ? Object.keys(c.seniority) : [];
+          const seniorVals = c.seniority ? Object.values(c.seniority) : [];
+          if (seniorityChart) seniorityChart.destroy();
+          const ctx2 = document.getElementById("seniorityChart").getContext("2d");
+          seniorityChart = new Chart(ctx2, {
+            type: "line",
+            data: { labels: seniorNames, datasets: [{ label: "Salário", data: seniorVals, tension: 0.3 }] },
+            options: { responsive: true, maintainAspectRatio: false },
+          });
+          // universities
+          const ul = document.getElementById("universitiesList");
+          ul.innerHTML = "";
+          (c.universities || []).forEach((u) => {
+            const li = document.createElement("li");
+            li.innerHTML = `<a href="${u.url}" target="_blank">${u.name}</a>`;
+            ul.appendChild(li);
+          });
+          const cl = document.getElementById("coursesList");
+          cl.innerHTML = "";
+          (c.courses || []).forEach((u) => {
+            const li = document.createElement("li");
+            li.innerHTML = `<a href="${u.url}" target="_blank">${u.name}</a>`;
+            cl.appendChild(li);
+          });
+          // videos thumbnails
+          currentVideos = c.videos || [];
+          for (let i = 0; i < 3; i++) {
+            const el = document.getElementById("thumb" + (i + 1));
+            if (currentVideos[i]) el.src = getThumb(currentVideos[i]);
+            else el.src = "";
+          }
+        }
+
+        // start loader
+        loadCareersAndRender();
       </script>
 
       <div class="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-6 fade-up mt-3">
@@ -201,7 +229,12 @@
             Exportar currículo
           </button>
 
-          <a id="backBtn" href="https://laurapigosso.github.io/Deploy-Proxima-Parada/" class="px-4 py-2 bg-[var(--blue)] text-white rounded-lg font-semibold shadow transition">Voltar</a>
+          <a
+            id="backBtn"
+            href="https://laurapigosso.github.io/Deploy-Proxima-Parada/"
+            class="px-4 py-2 bg-[var(--blue)] text-white rounded-lg font-semibold shadow transition"
+            >Voltar</a
+          >
         </div>
       </div>
 
